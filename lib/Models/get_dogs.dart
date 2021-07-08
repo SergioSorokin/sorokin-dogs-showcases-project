@@ -6,8 +6,6 @@ class GetDogs {
   Future<List<BreedModel>> getDogs() async {
     var url = Uri.parse('https://dog.ceo/api/breeds/list/all');
 
-    // Await the http get response, then decode the json-formatted response.
-    // Дождитесь ответа http get, затем расшифруйте ответ в формате json.
     var response = await http.get(url);
     final breeds = <BreedModel>[];
     if (response.statusCode == 200) {
@@ -29,7 +27,6 @@ class GetDogs {
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
-    print(breeds);
     return breeds;
   }
 }

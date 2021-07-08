@@ -13,41 +13,47 @@ class BreedDog extends StatefulWidget {
 }
 
 class _BreedDogState extends State<BreedDog> {
-  List<BreedModel> breeds = [];
-
+  Future<List<BreedModel>> breeds = GetDogs().getDogs();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                GetDogs().getDogs();
-              });
-
-              // print(lts2);
-            },
-            child: Icon(
-              Icons.get_app,
-            )),
         appBar: AppBar(
-          title: Text('BreedDogs'),
+          title: Center(
+            child: Text('BreedDogs'),
+          ),
         ),
-        body: ListView.builder(
-            itemCount: breeds.length,
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: ListTile(
-                  onTap: () {},
-                  title: Center(
-                      child: Text(''
-                    '${breeds[index]}',
-                  )),
-                ),
+        body: FutureBuilder<List>(
+          future: breeds,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: ListTile(
+                      onTap: () {},
+                      title: Center(
+                        child: Text(
+                          '${snapshot.data![index]}',
+                          style: TextStyle(fontSize: 23),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               );
-            }),
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }
