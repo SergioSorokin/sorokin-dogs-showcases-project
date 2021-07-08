@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'Models/models_dogs.dart';
-import 'dogs.dart';
-import 'screens/breed_list_screen.dart';
+import 'Models/get_dogs.dart';
+import 'screens/screen_breed_dog.dart';
+
 
 void main() {
 
