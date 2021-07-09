@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:sorokin_dogs_showcases_project/Models/breed_model.dart';
+import 'package:sorokin_dogs_showcases_project/screens/screen_images_breed_dog.dart';
 
 import '../Models/get_dogs.dart';
 
 class BreedDog extends StatefulWidget {
   const BreedDog({Key? key}) : super(key: key);
+  static const routeName = '/breedDog';
 
   @override
   _BreedDogState createState() => _BreedDogState();
@@ -21,7 +23,10 @@ class _BreedDogState extends State<BreedDog> {
       child: Scaffold(
         appBar: AppBar(
           title: Center(
-            child: Text('Dog Breeds',style: TextStyle(fontSize: 32),),
+            child: Text(
+              'Dog Breeds',
+              style: TextStyle(fontSize: 32),
+            ),
           ),
         ),
         body: FutureBuilder<List>(
@@ -34,7 +39,13 @@ class _BreedDogState extends State<BreedDog> {
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          ImageScreen.routeName,
+                          arguments: snapshot.data![index],
+                        );
+                      },
                       title: Center(
                         child: Text(
                           '${snapshot.data![index]}',

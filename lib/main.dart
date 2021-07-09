@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sorokin_dogs_showcases_project/Models/breed_model.dart';
 
-import 'Models/get_dogs.dart';
 import 'screens/screen_breed_dog.dart';
+import 'screens/screen_images_breed_dog.dart';
 
 
 void main() {
@@ -21,6 +22,10 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
+      routes: {
+        BreedDog.routeName:(context)=>BreedDog(),
+        ImageScreen.routeName:(context)=>ImageScreen()
+      },
       home: BreedDog(
       ),
     );
