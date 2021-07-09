@@ -5,6 +5,6 @@ class BreedModel {
   BreedModel({ this.name, this.subName});
 
   @override
-  String toString() => subName != null ? '$subName $name' : '$name';
+  String toString() => subName != null ? '$name  $subName' : '$name';
 }
 

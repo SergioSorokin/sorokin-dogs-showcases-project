@@ -21,7 +21,7 @@ class _BreedDogState extends State<BreedDog> {
       child: Scaffold(
         appBar: AppBar(
           title: Center(
-            child: Text('BreedDogs'),
+            child: Text('Dog Breeds',style: TextStyle(fontSize: 32),),
           ),
         ),
         body: FutureBuilder<List>(
