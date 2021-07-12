@@ -6,6 +6,7 @@ import 'package:sorokin_dogs_showcases_project/Models/breed_model.dart';
 
 class ImageScreen extends StatefulWidget {
   static const routeName = '/imageScreen';
+
   const ImageScreen({Key? key}) : super(key: key);
 
   @override
@@ -17,33 +18,41 @@ class _ImageScreenState extends State<ImageScreen> {
   Widget build(BuildContext context) {
     BreedModel breedModel =
         ModalRoute.of(context)!.settings.arguments as BreedModel;
-    String mixLink = breedModel.subName != null
-        ? 'https://dog.ceo/api/breed/${breedModel.name}/${breedModel.subName}/images'
-        : 'https://dog.ceo/api/breed/${breedModel.name}/images';
-    // print(mixLink);
+
+    String _name = '${breedModel.name}';
+    String _subName = '${breedModel.subName}';
+
+    String mixLink = (_subName.isEmpty && _subName == 'null')
+        ? 'https://dog.ceo/api/breed/$_name/$_subName/images'
+        : 'https://dog.ceo/api/breed/$_name/images';
+
     Future<List<dynamic>> getImagesDog() async {
       var url = Uri.parse(mixLink);
       var response = await http.get(url);
 
       final imagesAddress = <dynamic>[];
-      if (response.statusCode == 200){
-      final responseAsList = jsonDecode(response.body);
-      final List<dynamic> addresses = responseAsList['message'];
-      for (final address in addresses) {
-        imagesAddress.add(address);
-      }
+      if (response.statusCode == 200) {
+        final responseAsList = jsonDecode(response.body);
+        final List<dynamic> addresses = responseAsList['message'];
+        for (final address in addresses) {
+          imagesAddress.add(address);
+        }
       } else {
         print('Request failed with status: ${response.statusCode}.');
       }
-      // print(imagesAddress[0]);
       return imagesAddress;
     }
 
+    String _title = (_subName.isEmpty || _subName == 'null')
+        ? '$_name'
+        : '$_name $_subName';
+
     Future<List<dynamic>> imagesBreeds = getImagesDog();
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(breedModel.name ?? 'null!'),
+          title: Text(_title),
         ),
         body: FutureBuilder<List>(
           future: imagesBreeds,
